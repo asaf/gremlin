@@ -2,7 +2,7 @@ package com.tinkerpop.gremlin.groovy.console;
 
 import com.tinkerpop.gremlin.Imports;
 import com.tinkerpop.gremlin.groovy.Gremlin;
-import jline.History;
+import jline.console.history.FileHistory;
 import org.codehaus.groovy.tools.shell.Groovysh;
 import org.codehaus.groovy.tools.shell.IO;
 import org.codehaus.groovy.tools.shell.InteractiveShellRunner;
@@ -43,12 +43,12 @@ public class Console {
         GROOVYSH.execute("import groovy.grape.Grape");
 
         GROOVYSH.setResultHook(new ResultHookClosure(GROOVYSH, STANDARD_IO, STANDARD_RESULT_PROMPT));
-        GROOVYSH.setHistory(new History());
+        //GROOVYSH.setHistory(new History());
 
         final InteractiveShellRunner runner = new InteractiveShellRunner(GROOVYSH, new PromptClosure(GROOVYSH, STANDARD_INPUT_PROMPT));
         runner.setErrorHandler(new ErrorHookClosure(runner, STANDARD_IO));
         try {
-            runner.setHistory(new History(new File(System.getProperty("user.home") + "/" + HISTORY_FILE)));
+            runner.setHistory(new FileHistory(new File(System.getProperty("user.home") + "/" + HISTORY_FILE)));
         } catch (IOException e) {
             STANDARD_IO.err.println("Unable to create history file: " + HISTORY_FILE);
         }
